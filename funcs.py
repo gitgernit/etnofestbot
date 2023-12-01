@@ -3,7 +3,7 @@ import string
 
 
 def input_field():
-    return 'выберите ответ'
+    return 'выбери ответ'
 
 
 def greet():
@@ -11,23 +11,27 @@ def greet():
 
 
 def accepted():
-    return 'bono'
+    return 'принято'
 
 
 def not_accepted():
-    return 'malo'
+    return 'не принято'
 
 
 def attempting_start_again():
-    return 'ты уже стартанул оло'
+    return 'бот уже запущен'
 
 
 def end():
-    return (f'ура ты выграл вот твой кот: '
+    return (f'ура ты выйграл вот твой код: '
             f'{"".join([random.choice(string.ascii_letters) for i in range(5)])}')
 
 
-def alreadly_won():
+def checking():
+    return f'проверяю код'
+
+
+def already_won():
     return 'ты уже победил, смирись'
 
 
@@ -80,7 +84,7 @@ def question2_2_answer_2():
 
 
 def question3():
-    return 'вопрос 3 иди найди код и напиши мне ево (ответ: kotik)'
+    return 'вопрос 3 иди найди код и напиши мне его (ответ: kotik)'
 
 
 def question3_answer_1():
