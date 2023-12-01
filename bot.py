@@ -9,7 +9,7 @@ from config import config
 from funcs import greet, question1_1, question1_2, \
     question2_1, question2_2, question3, end, \
     attempting_start_again, accepted, not_accepted, \
-    already_won, checking
+   already_won, checking, end2
 
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=config.bot_token.get_secret_value())
@@ -46,7 +46,7 @@ async def question1_handler(message: types.Message, state: FSMContext):
     async with ChatActionSender.typing(bot=bot, chat_id=message.from_user.id):
         curr_question = int(str(await state.get_state())[-3:])
 
-        if message.text.lower() == answers[curr_question]:
+        if message.text == answers[curr_question]:
             await message.answer(accepted(), reply_markup=types.ReplyKeyboardRemove())
             choice = random.randint(1, 2)
 
@@ -75,7 +75,7 @@ async def question2_handler(message: types.Message, state: FSMContext):
     async with ChatActionSender.typing(bot=bot, chat_id=message.from_user.id):
         curr_question = int(str(await state.get_state())[-3:])
 
-        if message.text.lower() == answers[curr_question]:
+        if message.text == answers[curr_question]:
             await message.answer(accepted(), reply_markup=types.ReplyKeyboardRemove())
             await asyncio.sleep(1)
             await bot.send_message(message.from_user.id, question3(),
@@ -113,6 +113,8 @@ async def question3_handler(message: types.Message, state: FSMContext):
                              message_id=msg.message_id)
     if message.text.lower() == answers[curr_question]:
         await message.answer(end())
+        await asyncio.sleep(5)
+        await message.answer(end2())
         await state.set_state(states.won)
 
     else:
