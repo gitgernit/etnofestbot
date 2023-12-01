@@ -4,8 +4,9 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import SecretStr
 from funcs import question1_1_answer_1, question1_1_answer_2, \
     question1_2_answer_1, question1_2_answer_2, question2_2_answer_1, \
-    question2_2_answer_2, question3_answer_1, question3_answer_2, \
-    input_field, question2_1_answer_1, question2_1_answer_2
+    question2_2_answer_2, question3_answer_1, question1_1_answer_3, \
+    input_field, question2_1_answer_1, question2_1_answer_2, question1_2_answer_3, \
+    question2_1_answer_3, question2_2_answer_3
 
 
 class Settings(BaseSettings):
@@ -20,14 +21,15 @@ class Settings(BaseSettings):
         answering3 = State()
         won = State()
 
-    answers: dict = {1_1: 'ответ 1_1', 1_2: 'ответ 1_2',
-                     2_1: 'ответ 2_1', 2_2: 'ответ 2_2',
-                     3: 'kotik'}
+    answers: dict = {1_1: question1_1_answer_1(), 1_2: question1_2_answer_2(),
+                     2_1: question2_1_answer_3(), 2_2: question2_2_answer_1(),
+                     3: question3_answer_1()}
 
     question1_1_kb: list = [
         [
             KeyboardButton(text=question1_1_answer_1()),
-            KeyboardButton(text=question1_1_answer_2())
+            KeyboardButton(text=question1_1_answer_2()),
+            KeyboardButton(text=question1_1_answer_3())
         ]
     ]
     question1_1_markup: ReplyKeyboardMarkup = ReplyKeyboardMarkup(
@@ -39,7 +41,8 @@ class Settings(BaseSettings):
     question1_2_kb: list = [
         [
             KeyboardButton(text=question1_2_answer_1()),
-            KeyboardButton(text=question1_2_answer_2())
+            KeyboardButton(text=question1_2_answer_2()),
+            KeyboardButton(text=question1_2_answer_3())
         ]
     ]
     question1_2_markup: ReplyKeyboardMarkup = ReplyKeyboardMarkup(
@@ -51,7 +54,8 @@ class Settings(BaseSettings):
     question2_1_kb: list = [
         [
             KeyboardButton(text=question2_1_answer_1()),
-            KeyboardButton(text=question2_1_answer_2())
+            KeyboardButton(text=question2_1_answer_2()),
+            KeyboardButton(text=question2_1_answer_3())
         ]
     ]
     question2_1_markup: ReplyKeyboardMarkup = ReplyKeyboardMarkup(
@@ -63,7 +67,8 @@ class Settings(BaseSettings):
     question2_2_kb: list = [
         [
             KeyboardButton(text=question2_2_answer_1()),
-            KeyboardButton(text=question2_2_answer_2())
+            KeyboardButton(text=question2_2_answer_2()),
+            KeyboardButton(text=question2_2_answer_3())
         ]
     ]
     question2_2_markup: ReplyKeyboardMarkup = ReplyKeyboardMarkup(
