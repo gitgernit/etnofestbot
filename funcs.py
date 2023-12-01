@@ -19,7 +19,7 @@ def not_accepted():
 
 
 def attempting_start_again():
-    return 'бот уже запущен'
+    return 'ты уже запустил бота'
 
 
 def end():

@@ -31,11 +31,13 @@ async def start_handler(message: types.Message, state: FSMContext):
         choice = random.randint(1, 2)
 
         if choice == 1:
-            await bot.send_message(message.from_user.id, question1_1(), reply_markup=config.question1_1_markup)
+            await bot.send_message(message.from_user.id, question1_1(),
+                                   reply_markup=config.question1_1_markup)
             await state.set_state(states.answering1_1)
 
         elif choice == 2:
-            await bot.send_message(message.from_user.id, question1_2(), reply_markup=config.question1_2_markup)
+            await bot.send_message(message.from_user.id, question1_2(),
+                                   reply_markup=config.question1_2_markup)
             await state.set_state(states.answering1_2)
 
 
@@ -45,16 +47,18 @@ async def question1_handler(message: types.Message, state: FSMContext):
         curr_question = int(str(await state.get_state())[-3:])
 
         if message.text == answers[curr_question]:
-            await message.answer(accepted())
+            await message.answer(accepted(), reply_markup=types.ReplyKeyboardRemove())
             choice = random.randint(1, 2)
 
             await asyncio.sleep(0.5)
             if choice == 1:
-                await bot.send_message(message.from_user.id, question2_1(), reply_markup=config.question2_1_markup)
+                await bot.send_message(message.from_user.id, question2_1(),
+                                       reply_markup=config.question2_1_markup)
                 await state.set_state(states.answering2_1)
 
             elif choice == 2:
-                await bot.send_message(message.from_user.id, question2_2(), reply_markup=config.question2_2_markup)
+                await bot.send_message(message.from_user.id, question2_2(),
+                                       reply_markup=config.question2_2_markup)
                 await state.set_state(states.answering2_2)
 
         else:
@@ -74,7 +78,8 @@ async def question2_handler(message: types.Message, state: FSMContext):
         if message.text == answers[curr_question]:
             await message.answer(accepted(), reply_markup=types.ReplyKeyboardRemove())
             await asyncio.sleep(0.5)
-            await bot.send_message(message.from_user.id, question3(), reply_markup=types.ReplyKeyboardRemove())
+            await bot.send_message(message.from_user.id, question3(),
+                                   reply_markup=types.ReplyKeyboardRemove())
             await state.set_state(states.answering3)
 
         else:
@@ -94,17 +99,27 @@ async def question3_handler(message: types.Message, state: FSMContext):
 
     for i in range(10):
         curr_dots = (curr_dots - 1) % 3 + 1
-        await msg.edit_text(checking() + '.' * curr_dots)
+
+        try:
+            await msg.edit_text(checking() + '.' * curr_dots)
+
+        finally:
+            pass
+
         curr_dots += 1
         await asyncio.sleep(0.5)
 
+    await bot.delete_message(chat_id=message.from_user.id,
+                             message_id=msg.message_id)
     if message.text == answers[curr_question]:
         await message.answer(end())
         await state.set_state(states.won)
 
     else:
         await message.answer(not_accepted(), reply_markup=types.ReplyKeyboardRemove())
-        await bot.send_message(message.from_user.id, question3(), reply_markup=types.ReplyKeyboardRemove())
+        await asyncio.sleep(0.5)
+        await bot.send_message(message.from_user.id, question3(),
+                               reply_markup=types.ReplyKeyboardRemove())
 
 
 @dp.message(StateFilter(states.won))
